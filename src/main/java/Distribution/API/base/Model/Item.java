@@ -1,20 +1,18 @@
 package Distribution.API.base.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
+@Table(name="storage")
 public class Item {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String title;
     private String serial;
     private int quantity;
     private int storage;
-    @Transient
-    private long order;
 
     public Item() {
     }
@@ -24,14 +22,6 @@ public class Item {
         this.serial = serial;
         this.quantity = quantity;
         this.storage = storage;
-    }
-
-    public Item(String title, String serial, int quantity, int storage, long order) {
-        this.title = title;
-        this.serial = serial;
-        this.quantity = quantity;
-        this.storage = storage;
-        this.order = order;
     }
 
     public long getId() {
@@ -72,13 +62,5 @@ public class Item {
 
     public void setStorage(int storage) {
         this.storage = storage;
-    }
-
-    public long getOrder() {
-        return order;
-    }
-
-    public void setOrder(long order) {
-        this.order = order;
     }
 }

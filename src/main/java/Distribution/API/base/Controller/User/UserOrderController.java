@@ -29,7 +29,7 @@ public class UserOrderController {
 
     @RequestMapping( value = "/all/{userId}", method = RequestMethod.GET)
     public ResponseEntity getOrders(@PathVariable("userId") int userId)  {
-        List<Integer> orders = storageSrv.getOrders(userId);
+        List<Integer> orders = orderSrv.getOrdersByUser(userId);
         if (orders.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -38,7 +38,7 @@ public class UserOrderController {
 
     @RequestMapping( value = "/{orderId}", method = RequestMethod.GET)
     public ResponseEntity getOrderById(@PathVariable("orderId") long orderId)  {
-        List<Item> order = storageSrv.getOrder(orderId);
+        List<Item> order = orderSrv.getOrderItems(orderId);
         if (order.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -47,18 +47,18 @@ public class UserOrderController {
 
     @RequestMapping( value = "/{orderId}", method = RequestMethod.PUT)
     public ResponseEntity updateOrder(@PathVariable("orderId") long orderId,
-                                  @RequestParam("status") OrderStatus status){
-        int client = orderSrv.getClient(orderId);
+                                      @RequestParam("status") OrderStatus status){
+        int client = orderSrv.getClientByOrder(orderId);
         if (client==0) {
             return ResponseEntity.notFound().build();
         }
-        orderSrv.changeStatus(status);
+        orderSrv.changeStatus(orderId, status);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping( value = "/client/{orderId}", method = RequestMethod.GET)
-    public ResponseEntity getOrderClient(@PathVariable("orderId") int orderId)  {
-        int client = orderSrv.getClient(orderId);
+    @RequestMapping( value = "/{orderId}/client", method = RequestMethod.GET)
+    public ResponseEntity getClientOrder(@PathVariable("orderId") long orderId)  {
+        int client = orderSrv.getClientByOrder(orderId);
         if (client==0) {
             return ResponseEntity.notFound().build();
         }

@@ -2,6 +2,7 @@ package Distribution.API.base.Controller.Client;
 
 import Distribution.API.base.Controller.Config.OrderStatus;
 import Distribution.API.base.Model.Item;
+import Distribution.API.base.Model.Order;
 import Distribution.API.base.Service.AccountService;
 import Distribution.API.base.Service.OrderService;
 import Distribution.API.base.Service.StorageService;
@@ -24,12 +25,13 @@ public class ClientOrderController {
     private StorageService storageSrv;
     @Autowired
     private AccountService accountSrv;
-
+//
     @RequestMapping( value = "/", method = RequestMethod.POST)
     public ResponseEntity addOrder(@PathVariable("orderId") long orderId)  {
-        List<Item> order = storageSrv.getOrder(orderId);
+        List<Item> order = storageSrv.getOrderItems(orderId);
         if (order.isEmpty()) {
-            return ResponseEntity.ok(orderSrv.createOrder());
+            //TODO add real order
+            return ResponseEntity.ok(orderSrv.createOrder(new Order()));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -45,7 +47,7 @@ public class ClientOrderController {
 
     @RequestMapping( value = "/{orderId}", method = RequestMethod.GET)
     public ResponseEntity getOrder(@PathVariable("orderId") long orderId)  {
-        List<Item> order = storageSrv.getOrder(orderId);
+        List<Item> order = storageSrv.getOrderItems(orderId);
         if (order.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -55,11 +57,11 @@ public class ClientOrderController {
     @RequestMapping( value = "/{orderId}/{status}", method = RequestMethod.PUT)
     public ResponseEntity updateOrderStatus(@PathVariable("orderId") int orderId,
                                       @PathVariable("status") OrderStatus status){
-        int client = orderSrv.getClient(orderId);
+        int client = orderSrv.getClientByOrder(orderId);
         if (client==0) {
             return ResponseEntity.notFound().build();
         }
-        orderSrv.changeStatus(status);
+        orderSrv.changeStatus(orderId, status);
         return ResponseEntity.ok().build();
     }
 }

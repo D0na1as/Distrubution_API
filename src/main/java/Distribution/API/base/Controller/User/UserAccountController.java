@@ -15,27 +15,27 @@ public class UserAccountController {
     @Autowired
     private AccountService accountSrv;
 
-    @RequestMapping( value = "/user", method = RequestMethod.GET)
-    public ResponseEntity getAccount(@RequestParam("email") String email)  {
-        Account account = accountSrv.getAccountByEmail(email);
-        if (account==null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(account);
-    }
-
-    @RequestMapping( value = "/user", method = RequestMethod.PUT)
-    public ResponseEntity updateAccount(@RequestBody Account updAccount)  {
-        Account account = accountSrv.getAccountByEmail(updAccount.getEmail());
-        if (account==null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(account);
-    }
-
-    @RequestMapping( value = "/user", method = RequestMethod.PUT)
-    public ResponseEntity updatePass(@RequestParam("pass") String password)  {
-        accountSrv.changePass(password);
-        return ResponseEntity.ok().build();
-    }
+//    @RequestMapping( value = "/user", method = RequestMethod.GET)
+//    public ResponseEntity getAccount(@RequestParam("email") String email)  {
+//        Account account = accountSrv.getAccountByEmail(email);
+//        if (account==null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(account);
+//    }
+//
+//    @RequestMapping( value = "/user", method = RequestMethod.PUT)
+//    public ResponseEntity updateAccount(@RequestBody Account updAccount)  {
+//        Account account = accountSrv.getAccountByEmail(updAccount.getEmail());
+//        if (account==null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(account);
+//    }
+//
+//    @RequestMapping( value = "/user", method = RequestMethod.PUT)
+//    public ResponseEntity updatePass(@RequestParam("pass") String password)  {
+//        accountSrv.changePass(password);
+//        return ResponseEntity.ok().build();
+//    }
 }

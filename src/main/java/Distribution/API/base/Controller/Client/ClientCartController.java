@@ -23,42 +23,42 @@ public class ClientCartController {
     @Autowired
     private StorageService storageSrv;
     String client = "Client";
+//
+//    @RequestMapping( value = "/", method = RequestMethod.GET )
+//    public ResponseEntity addItem()  {
+//        List<Long> cart = cartSrv.getCart(client);
+//        if (cart.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(cart);
+//    }
 
-    @RequestMapping( value = "/", method = RequestMethod.GET )
-    public ResponseEntity addItem()  {
-        List<Long> cart = cartSrv.getCart(client);
-        if (cart.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(cart);
-    }
-
-    @RequestMapping( value = "/item", method = RequestMethod.PUT )
-    public ResponseEntity addItem(@RequestParam("item") long item)  {
-        Item itemNr = storageSrv.getItem(item);
-        if (itemNr==null) {
-            return ResponseEntity.notFound().build();
-        }
-        cartSrv.addItem(itemNr);
-        return ResponseEntity.ok().build();
-    }
-
-    @RequestMapping( value = "/item", method = RequestMethod.DELETE)
-    public ResponseEntity removeItem(@RequestParam("item") long item)  {
-        Boolean result = cartSrv.removeItem(item);
-        if (result) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
-    }
-
-    @RequestMapping( value = "/clean", method = RequestMethod.DELETE)
-    public ResponseEntity removeItem()  {
-        Boolean result = cartSrv.clean();
-        if (result) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
-    }
+//    @RequestMapping( value = "/item", method = RequestMethod.PUT )
+//    public ResponseEntity addItem(@RequestParam("item") long item)  {
+//        Item itemNr = storageSrv.getItem(item);
+//        if (itemNr==null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        cartSrv.addItem(itemNr);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @RequestMapping( value = "/item", method = RequestMethod.DELETE)
+//    public ResponseEntity removeItem(@RequestParam("item") long item)  {
+//        Boolean result = cartSrv.removeItem(item);
+//        if (result) {
+//            return ResponseEntity.ok().build();
+//        }
+//        return ResponseEntity.badRequest().build();
+//    }
+//
+//    @RequestMapping( value = "/clean", method = RequestMethod.DELETE)
+//    public ResponseEntity removeItem()  {
+//        Boolean result = cartSrv.clean();
+//        if (result) {
+//            return ResponseEntity.ok().build();
+//        }
+//        return ResponseEntity.badRequest().build();
+//    }
 
 }

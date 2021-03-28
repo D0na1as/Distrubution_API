@@ -18,6 +18,8 @@ public class UserStorageController {
 
     @RequestMapping( value = "/item", method = RequestMethod.POST)
     public ResponseEntity addItem(@RequestBody Item item)  {
+        Item asd = item;
+        //TODO check for empty object
         if (item==null) {
             return ResponseEntity.notFound().build();
         }
@@ -37,7 +39,7 @@ public class UserStorageController {
     @RequestMapping( value = "/item/count", method = RequestMethod.GET)
     public ResponseEntity getStorageSize()  {
         long count = storageSrv.getCount();
-        if (count!=0) {
+        if (count==0) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(count);
@@ -46,18 +48,20 @@ public class UserStorageController {
     @RequestMapping( value = "/item/{id}", method = RequestMethod.GET)
     public ResponseEntity getItem(@PathVariable long id)  {
         Item item = storageSrv.getItem(id);
-        if (item==null) {
+        if (item.getId()==0) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(item);
     }
 
-    @RequestMapping( value = "/item", method = RequestMethod.PUT)
-    public ResponseEntity updateItem(@RequestBody Item item)  {
-        Item checkItm = storageSrv.getItem(item.getId());
-        if (item==null || checkItm==null) {
+    @RequestMapping( value = "/item/{id}", method = RequestMethod.PUT)
+    public ResponseEntity updateItem(@RequestBody Item item,
+                                     @PathVariable long id)  {
+        Item checkItm = storageSrv.getItem(id);
+        if (checkItm.getId()==0) {
             return ResponseEntity.notFound().build();
         }
+        item.setId(id);
         return ResponseEntity.ok(storageSrv.updateItem(item));
     }
 }
