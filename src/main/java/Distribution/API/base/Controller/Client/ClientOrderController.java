@@ -25,20 +25,20 @@ public class ClientOrderController {
     private StorageService storageSrv;
     @Autowired
     private AccountService accountSrv;
-//
-    @RequestMapping( value = "/", method = RequestMethod.POST)
-    public ResponseEntity addOrder(@PathVariable("orderId") long orderId)  {
-        List<Item> order = storageSrv.getOrderItems(orderId);
-        if (order.isEmpty()) {
-            //TODO add real order
-            return ResponseEntity.ok(orderSrv.createOrder(new Order()));
-        }
-        return ResponseEntity.badRequest().build();
-    }
+//TODO method
+//    @RequestMapping( value = "/", method = RequestMethod.POST)
+//    public ResponseEntity addOrder(@PathVariable("orderId") long orderId)  {
+//        List<Item> order = storageSrv.getOrderItems(orderId);
+//        if (order.isEmpty()) {
+//            //TODO add real order
+//            return ResponseEntity.ok(orderSrv.createOrder(new Order()));
+//        }
+//        return ResponseEntity.badRequest().build();
+//    }
 
-    @RequestMapping( value = "/all/{userId}", method = RequestMethod.GET)
-    public ResponseEntity getOrders(@PathVariable("userId") int userId)  {
-        List<Integer> orders = storageSrv.getOrders(userId);
+    @RequestMapping( value = "/all/{clientId}", method = RequestMethod.GET)
+    public ResponseEntity getOrders(@PathVariable("clientId") int clientId)  {
+        List<Integer> orders = orderSrv.getOrdersByClient(clientId);
         if (orders.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -56,7 +56,7 @@ public class ClientOrderController {
 
     @RequestMapping( value = "/{orderId}/{status}", method = RequestMethod.PUT)
     public ResponseEntity updateOrderStatus(@PathVariable("orderId") int orderId,
-                                      @PathVariable("status") OrderStatus status){
+                                            @PathVariable("status") OrderStatus status){
         int client = orderSrv.getClientByOrder(orderId);
         if (client==0) {
             return ResponseEntity.notFound().build();

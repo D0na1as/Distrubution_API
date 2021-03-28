@@ -17,7 +17,7 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
     String entitiesCount = "SELECT COUNT(*) FROM "+ storage;
     String pageItems = "SELECT * FROM "+ storage +" LIMIT ?1,?2";
     String getOrderItems = "SELECT * FROM "+ deliveries +" WHERE `order`=?";
-    String getOrderList = "SELECT `order` FROM "+ deliveries +" WHERE `storage`=?";
+    String getOrderListByUser = "SELECT `order` FROM "+ deliveries +" WHERE `storage`=?";
 
     //Query execution
     @Query(nativeQuery = true, value = entitiesCount)
@@ -29,6 +29,6 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
     @Query(nativeQuery = true, value = getOrderItems)
     List<Item> getOrderItems(long orderId);
 
-    @Query(nativeQuery = true, value = getOrderList)
+    @Query(nativeQuery = true, value = getOrderListByUser)
     List<Integer> getOrders(int userId);
 }

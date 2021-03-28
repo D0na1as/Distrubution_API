@@ -18,7 +18,7 @@ public class ClientStorageService {
 
     @RequestMapping( value = "/page/{page}", method = RequestMethod.GET)
     public ResponseEntity getPage(@PathVariable("page") int page,
-                                  @RequestParam("value") int count)  {
+                                  @RequestParam("count") int count)  {
         List<Item> items = storageSrv.getPage(page, count);
         if (items.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -29,7 +29,7 @@ public class ClientStorageService {
     @RequestMapping( value = "/item/{id}", method = RequestMethod.GET)
     public ResponseEntity getItem(@PathVariable int id)  {
         Item item = storageSrv.getItem(id);
-        if (item==null) {
+        if (item.getId()==0) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(item);

@@ -37,4 +37,8 @@ public class OrderService {
     public List<Integer> getOrdersByUser(int userId) {
         return storageSrv.getOrders(userId);
     }
+
+    public List<Integer> getOrdersByClient(int clientId) {
+        return orderRepo.getOrdersByClient(clientId);
+    }
 }

@@ -28,7 +28,7 @@ public class UserStorageController {
 
     @RequestMapping( value = "/page/{page}", method = RequestMethod.GET)
     public ResponseEntity getPage(@PathVariable("page") int page,
-                                  @RequestParam("value") int count)  {
+                                  @RequestParam("count") int count)  {
         List<Item> items = storageSrv.getPage(page, count);
         if (items.isEmpty()) {
             return ResponseEntity.notFound().build();
