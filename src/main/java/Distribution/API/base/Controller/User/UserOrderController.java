@@ -3,20 +3,19 @@ package Distribution.API.base.Controller.User;
 import Distribution.API.base.Controller.Config.OrderStatus;
 import Distribution.API.base.Model.Account;
 import Distribution.API.base.Model.Item;
+import Distribution.API.base.Model.Order;
 import Distribution.API.base.Service.AccountService;
 import Distribution.API.base.Service.OrderService;
 import Distribution.API.base.Service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/v1/user/order")
 public class UserOrderController {
 
@@ -29,7 +28,18 @@ public class UserOrderController {
 
     @RequestMapping( value = "/all/{userId}", method = RequestMethod.GET)
     public ResponseEntity getOrders(@PathVariable("userId") int userId)  {
-        List<Integer> orders = orderSrv.getOrdersByUser(userId);
+        List<Order> orders = orderSrv.getOrdersByUser(userId);
+        if (orders.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(orders);
+    }
+
+
+    @RequestMapping( value = "/all/{userId}/{status}", method = RequestMethod.GET)
+    public ResponseEntity getOrdersByStatus(@PathVariable("userId") int userId,
+                                    @PathVariable("status") OrderStatus status)  {
+        List<Order> orders = orderSrv.getByUserAndStatus(userId, status);
         if (orders.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -57,7 +67,7 @@ public class UserOrderController {
     }
 
     @RequestMapping( value = "/{orderId}/client", method = RequestMethod.GET)
-    public ResponseEntity getClientOrder(@PathVariable("orderId") long orderId)  {
+    public ResponseEntity getClientOrder(@PathVariable("client") long orderId)  {
         int client = orderSrv.getClientByOrder(orderId);
         if (client==0) {
             return ResponseEntity.notFound().build();

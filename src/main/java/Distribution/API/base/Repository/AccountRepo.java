@@ -11,7 +11,7 @@ public interface AccountRepo extends CrudRepository<Account, Long> {
     String table = "account";
 
     //Queries
-    String getAccount = "SELECT * FROM "+ table;
+    String getAccount = "SELECT * FROM "+ table +" WHERE id=?";
 
     //Query execution
     @Query(nativeQuery = true, value = getAccount)

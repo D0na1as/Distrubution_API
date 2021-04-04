@@ -25,9 +25,10 @@ public interface OrderRepo extends CrudRepository<Order, Long> {
     //Queries
 //    String createOrder = "INSERT INTO "+ table +"(client ";
 //    String pageItems = "SELECT * FROM "+ table +" LIMIT ?1,?2";
-    String getClient = "SELECT IFNULL((SELECT CLIENT FROM "+ table +" WHERE id=?), 0);";
-    String updateStatus = "UPDATE " + table + " SET status=:#{#status.name()} WHERE id=?1";
-    String getClientByClient = "SELECT id FROM "+ table +" WHERE client=?";
+    String getClient = "SELECT IFNULL((SELECT CLIENT FROM `"+ table +"` WHERE id=?1), 0);";
+    String updateStatus = "UPDATE `" + table + "` SET status=:#{#status.name()} WHERE id=?1";
+    String getClientByClient = "SELECT id FROM `"+ table +"` WHERE client=?1";
+    String getOrder = "SELECT * FROM `"+ table +"` WHERE id=?1";
 
     //Query execution
 //    @Query(nativeQuery = true, value = entitiesCount)
@@ -41,6 +42,9 @@ public interface OrderRepo extends CrudRepository<Order, Long> {
 
     @Query(nativeQuery = true, value = getClientByClient)
     List<Integer> getOrdersByClient(int clientId);
+
+    @Query(nativeQuery = true, value = getOrder)
+    Order getOrder(long order);
 
     @Transactional
     @Modifying(clearAutomatically = true)

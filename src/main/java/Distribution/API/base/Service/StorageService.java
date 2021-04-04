@@ -22,8 +22,7 @@ public class StorageService {
         long allItemCount = getCount();
         if ( allItemCount > 0 ) {
             long first = (long) page * count - count;
-            List<Item> items = storageRepo.getPageItems(first, count);
-            return items;
+            return storageRepo.getPageItems(first, count);
         }
 //        else if ( allItemCount < ((long) page * count ) && allItemCount > (((long) (page - 1) * count))) {
 //            long first = (long) page * count - count;
@@ -33,8 +32,21 @@ public class StorageService {
         return new ArrayList<>();
     }
 
+    public List<Item> getPage(int page, int count, String search) {
+        long allItemCount = getCount(search);
+        if ( allItemCount > 0 ) {
+            long first = (long) page * count - count;
+            return storageRepo.getSearchPage(first, count, search);
+        }
+        return new ArrayList<>();
+    }
+
     public long getCount() {
         return storageRepo.storageItemCount();
+    }
+
+    public long getCount(String search) {
+        return storageRepo.storageItemCount(search);
     }
 
     public Item getItem(long id) {
@@ -45,7 +57,7 @@ public class StorageService {
         return addItem(item);
     }
 
-    public List<Integer> getOrders(int userId) {
+    public List<Long> getOrders(int userId) {
         return storageRepo.getOrders(userId);
     }
 
