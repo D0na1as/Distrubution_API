@@ -13,6 +13,7 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
 
     String storage = "storage";
     String deliveries = "deliveries";
+    String orders = "orders";
 
     //Queries
     String entitiesCount = "SELECT IFNULL((SELECT COUNT(*) FROM "+ storage +"), 0)";
@@ -21,8 +22,8 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
     String searchPage = "SELECT * FROM `"+ storage +"` WHERE `id` LIKE %:value% OR `title` LIKE %:value% OR " +
                         "`serial` LIKE %:value% OR `quantity` LIKE %:value% LIMIT :first,:count";
     String pageItems = "SELECT * FROM "+ storage +" LIMIT ?1,?2";
-    String getOrderItems = "SELECT * FROM "+ deliveries +" WHERE `order`=?";
-    String getOrderListByUser = "SELECT DISTINCT `order` FROM "+ deliveries +" WHERE `storage`=?";
+    String getOrderItems = "SELECT "+ storage +".id, `title`, `serial`, "+ orders +".quantity FROM `"+ storage +"` " +
+                           "RIGHT JOIN `"+ orders +"` ON "+ storage +".id="+ orders +".item_id WHERE "+ orders +".order_id=?";
 
     //Query execution
     @Query(nativeQuery = true, value = entitiesCount)
@@ -39,7 +40,15 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
 
     @Query(nativeQuery = true, value = getOrderItems)
     List<Item> getOrderItems(long orderId);
+//
+//    @Query(nativeQuery = true, value = getOrderListByUser)
+//    List<Long> getOrders(int userId);
 
-    @Query(nativeQuery = true, value = getOrderListByUser)
-    List<Long> getOrders(int userId);
+    //Add item to specific department
+//    @Modifying
+//    @Transactional
+//    @Query(nativeQuery = true, value = addItem)
+//    Item addItem(Item item);
+
+
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="storage")
-public class Item {
+public class Item extends Core{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -12,16 +12,14 @@ public class Item {
     private String title;
     private String serial;
     private int quantity;
-    private int storage;
 
     public Item() {
     }
 
-    public Item(String title, String serial, int quantity, int storage) {
+    public Item(String title, String serial, int quantity) {
         this.title = title;
         this.serial = serial;
         this.quantity = quantity;
-        this.storage = storage;
     }
 
     public long getId() {
@@ -54,13 +52,4 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public int getStorage() {
-        return storage;
-    }
-
-    public void setStorage(int storage) {
-        this.storage = storage;
-    }
-}
+    }}

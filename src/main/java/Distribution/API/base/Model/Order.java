@@ -1,49 +1,48 @@
 package Distribution.API.base.Model;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="orders")
-public class Order {
+public class Order extends Core{
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-    private long client;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private long orderId;
+    private long itemId;
+    private int quantity;
 
     public Order() {
     }
 
-    public Order(long client, OrderStatus status) {
-        this.client = client;
-        this.status = status;
+    public Order(long orderId, long itemId, int quantity) {
+        this.orderId = orderId;
+        this.itemId = itemId;
+        this.quantity = quantity;
     }
 
-    public long getId() {
-        return id;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
-    public long getClient() {
-        return client;
+    public long getItemId() {
+        return itemId;
     }
 
-    public void setClient(long client) {
-        this.client = client;
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
     }
 
-    public OrderStatus getStatus() {
-        return status;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
