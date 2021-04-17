@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/v1/client/order")
 public class ClientDeliveryController {
 
@@ -30,10 +29,10 @@ public class ClientDeliveryController {
     private CartService cartSrv;
 
     @PostMapping( value = "/" )
-    public ResponseEntity createOrder()  {
+    public ResponseEntity createOrder(@RequestParam("client") String client)  {
         List<Cart> cart = cartSrv.getCart();
         check.checkCartEmpty(cart);
-        return ResponseEntity.ok(deliverySrv.createOrder());
+        return ResponseEntity.ok(deliverySrv.createOrder(client));
     }
 
     @GetMapping( value = "/status/{status}" )

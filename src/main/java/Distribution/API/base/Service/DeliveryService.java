@@ -17,8 +17,6 @@ import java.util.List;
 @Service
 public class DeliveryService {
 
-    String client = "client";
-
     @Autowired
     private OrderRepo orderRepo;
     @Autowired
@@ -32,7 +30,7 @@ public class DeliveryService {
         return deliveryRepo.getClientByOrder(orderId);
     }
 
-    public long createOrder() {
+    public long createOrder(String client) {
         Delivery delivery = deliveryRepo.save(new Delivery(client, OrderStatus.pending));
         List<Cart> cart = cartSrv.getCart();
         for (Cart item:cart) {
