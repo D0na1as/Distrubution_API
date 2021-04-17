@@ -11,10 +11,10 @@ public interface AccountRepo extends CrudRepository<Account, Long> {
     String table = "account";
 
     //Queries
-    String getAccount = "SELECT * FROM "+ table +" WHERE id=?";
+    String getAccount = "SELECT * FROM "+ table +" WHERE email=?";
 
     //Query execution
     @Query(nativeQuery = true, value = getAccount)
-    Account getAccountById(int id);
+    Account getAccountByEmail(String email);
 
 }

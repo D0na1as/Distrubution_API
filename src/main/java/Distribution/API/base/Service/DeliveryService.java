@@ -28,8 +28,8 @@ public class DeliveryService {
     @Autowired
     private StorageService storageSrv;
 
-    public int getClientByOrder(long orderId) {
-        return orderRepo.getClientByOrder(orderId);
+    public String getClientByOrder(long orderId) {
+        return deliveryRepo.getClientByOrder(orderId);
     }
 
     public long createOrder() {

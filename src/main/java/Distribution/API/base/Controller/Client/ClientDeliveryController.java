@@ -36,23 +36,23 @@ public class ClientDeliveryController {
         return ResponseEntity.ok(deliverySrv.createOrder());
     }
 
-    @GetMapping( value = "/{status}" )
+    @GetMapping( value = "/status/{status}" )
     public ResponseEntity getOrdersByStatus(@PathVariable("status") OrderStatus status)  {
         List<Delivery> deliveries = deliverySrv.getByClientAndStatus( "client", status);
-        check.checkDelivEmpty(deliveries);
+        //check.checkDelivEmpty(deliveries);
         return ResponseEntity.ok(deliveries);
     }
 
     @PutMapping( value = "/{orderId}" )
     public ResponseEntity updateOrder(@PathVariable("orderId") long orderId,
                                       @RequestParam("status") OrderStatus status){
-        int client = deliverySrv.getClientByOrder(orderId);
-        check.checkById((long) client);
+        String client = deliverySrv.getClientByOrder(orderId);
+        check.checkStringEmpty( client);
         deliverySrv.changeStatus(orderId, status);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping( value = "/{orderId}/items" )
+    @GetMapping( value = "/{orderId}" )
     public ResponseEntity getOrder(@PathVariable("orderId") long orderId)  {
         List<Item> order = deliverySrv.getOrderItems(orderId);
         check.checkItemEmpty(order);

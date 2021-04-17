@@ -1,5 +1,6 @@
 package Distribution.API.base.Controller.Client;
 
+import Distribution.API.base.Controller.Exceptions.CheckObject;
 import Distribution.API.base.Model.Account;
 import Distribution.API.base.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +15,22 @@ public class ClientAccountController {
 
     @Autowired
     private AccountService accountSrv;
-//
-//    @RequestMapping( value = "/", method = RequestMethod.GET)
-//    public ResponseEntity getAccount(@RequestParam("email") String email)  {
-//        Account account = accountSrv.getAccountByEmail(email);
-//        if (account==null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(account);
-//    }
-//
-//    @RequestMapping( value = "/", method = RequestMethod.PUT)
-//    public ResponseEntity updateAccount(@RequestBody Account updAccount)  {
-//        Account account = accountSrv.getAccountByEmail(updAccount.getEmail());
-//        if (account==null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(account);
-//    }
-//
+    @Autowired
+    private CheckObject check;
+
+    @GetMapping( value = "/{client}" )
+    public ResponseEntity getClientAccount(@PathVariable("client") String client)  {
+        Account account = accountSrv.getAccountByEmail(client);
+        check.checkIfNull(account);
+        return ResponseEntity.ok(account);
+    }
+
+    @PutMapping( value = "/")
+    public ResponseEntity getClientAccount(@RequestBody Account account)  {
+        account = accountSrv.setAccountByEmail(account);
+        return ResponseEntity.ok(account);
+    }
+
 //    @RequestMapping( value = "/", method = RequestMethod.PUT)
 //    public ResponseEntity updatePass(@RequestParam("pass") String password)  {
 //        accountSrv.changePass(password);

@@ -29,16 +29,16 @@ public class CartService {
         return (List<Cart>) cartRepo.findAll();
     }
 
-    public long removeItem(long id) {
-        Cart cart = getItemById(id);
+    public long removeItem(long cartId) {
+        Cart cart = getItemById(cartId);
         if (addToStorage(cart)) {
-            cartRepo.deleteById(id);
+            cartRepo.deleteById(cartId);
             return 1;
         }
         return 0;
     }
 
-    private Cart getItemById(long id) {
+    public Cart getItemById(long id) {
         return cartRepo.findById(id).orElse(null);
     }
 
@@ -63,7 +63,7 @@ public class CartService {
     private Boolean getFromStorage(Cart cart){
         Item temp = storageSrv.getItem(cart.getItemId());
         int dif = temp.getQuantity()-cart.getCount();
-        if (dif<1 || temp.getQuantity()<1) {
+        if (dif<0 || temp.getQuantity()<1) {
             return false;
         }
         temp.setQuantity(temp.getQuantity()-cart.getCount());

@@ -1,6 +1,8 @@
 package Distribution.API.base.Controller.User;
 
+import Distribution.API.base.Controller.Exceptions.CheckObject;
 import Distribution.API.base.Model.Account;
+import Distribution.API.base.Model.Item;
 import Distribution.API.base.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,19 @@ public class UserAccountController {
 
     @Autowired
     private AccountService accountSrv;
+    @Autowired
+    private CheckObject check;
 
-    @RequestMapping( value = "/client/{clientId}", method = RequestMethod.GET)
-    public ResponseEntity getClientAccount(@PathVariable("clientId") int clientId)  {
-        Account account = accountSrv.getAccountById(clientId);
-        if (account==null) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping( value = "/{user}" )
+    public ResponseEntity getClientAccount(@PathVariable("user") String user)  {
+        Account account = accountSrv.getAccountByEmail(user);
+        check.checkIfNull(account);
+        return ResponseEntity.ok(account);
+    }
+
+    @PutMapping( value = "/")
+    public ResponseEntity getClientAccount(@RequestBody Account account)  {
+        account = accountSrv.setAccountByEmail(account);
         return ResponseEntity.ok(account);
     }
 

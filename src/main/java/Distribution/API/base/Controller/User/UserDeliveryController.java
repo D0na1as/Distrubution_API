@@ -3,6 +3,7 @@ package Distribution.API.base.Controller.User;
 import Distribution.API.base.Controller.Config.OrderStatus;
 import Distribution.API.base.Controller.Exceptions.CheckObject;
 import Distribution.API.base.Controller.Exceptions.ExceptionHandling;
+import Distribution.API.base.Model.Account;
 import Distribution.API.base.Model.Delivery;
 import Distribution.API.base.Model.Item;
 import Distribution.API.base.Model.Order;
@@ -26,25 +27,22 @@ public class UserDeliveryController {
     private CheckObject check;
 //    @Autowired
 //    private StorageService storageSrv;
-//    @Autowired
-//    private AccountService accountSrv;
+    @Autowired
+    private AccountService accountSrv;
 
 
-    @GetMapping( value = "/{status}" )
+    @GetMapping( value = "/status/{status}" )
     public ResponseEntity getOrdersByStatus(@PathVariable("status") OrderStatus status)  {
         List<Delivery> deliveries = deliverySrv.getByStatus(status);
-        check.checkDelivEmpty(deliveries);
-//        if (orders.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
+        //check.checkDelivEmpty(deliveries);
         return ResponseEntity.ok(deliveries);
     }
 
     @PutMapping( value = "/{orderId}" )
     public ResponseEntity updateOrder(@PathVariable("orderId") long orderId,
                                       @RequestParam("status") OrderStatus status){
-        int client = deliverySrv.getClientByOrder(orderId);
-        check.checkById((long) client);
+        String client = deliverySrv.getClientByOrder(orderId);
+        check.checkStringEmpty(client);
 //        if (client==0) {
 //            return ResponseEntity.notFound().build();
 //        }
@@ -61,6 +59,15 @@ public class UserDeliveryController {
 //        }
         return ResponseEntity.ok(order);
     }
+
+    @RequestMapping( value = "/{orderId}/client", method = RequestMethod.GET)
+    public ResponseEntity getClientOrder(@PathVariable("client") long orderId)  {
+        String client = deliverySrv.getClientByOrder(orderId);
+        check.checkStringEmpty(client);
+        Account account = accountSrv.getAccountByEmail(client);
+        return ResponseEntity.ok(account);
+    }
+
 //    @GetMapping( value = "/all" )
 //    public ResponseEntity getOrders()  {
 //        List<Order> orders = orderSrv.getAllOrders();
@@ -89,14 +96,5 @@ public class UserDeliveryController {
 //        orderSrv.changeStatus(orderId, status);
 //        return ResponseEntity.ok().build();
 //    }
-//
-//    @RequestMapping( value = "/{orderId}/client", method = RequestMethod.GET)
-//    public ResponseEntity getClientOrder(@PathVariable("client") long orderId)  {
-//        int client = orderSrv.getClientByOrder(orderId);
-//        if (client==0) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        Account account = accountSrv.getAccountById(client);
-//        return ResponseEntity.ok(account);
-//    }
+
 }

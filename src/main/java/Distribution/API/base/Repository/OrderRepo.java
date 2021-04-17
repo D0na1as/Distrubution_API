@@ -19,7 +19,6 @@ public interface OrderRepo extends CrudRepository<Order, Long> {
     //Queries
 //    String createOrder = "INSERT INTO "+ table +"(client ";
 //    String pageItems = "SELECT * FROM "+ table +" LIMIT ?1,?2";
-    String getClient = "SELECT IFNULL((SELECT CLIENT FROM `"+ table +"` WHERE id=?1), 0);";
     String updateStatus = "UPDATE `" + table + "` SET status=:#{#status.name()} WHERE id=?1";
     String getOrdersByClient = "SELECT * FROM `"+ table +"` WHERE client=?1";
     String getOrder = "SELECT * FROM `"+ table +"` WHERE id=?1";
@@ -29,10 +28,7 @@ public interface OrderRepo extends CrudRepository<Order, Long> {
 //    long storageItemCount();
 
 //    @Query(nativeQuery = true, value = pageItems)
-//    List<Item> getPageItems(long first, long count);
-    
-    @Query(nativeQuery = true, value = getClient)
-    int getClientByOrder(long orderId);
+//    List<Item> getPageItems(long first, long count)
 
     @Query(nativeQuery = true, value = getOrdersByClient)
     List<Order> getOrdersByClient(int clientId);

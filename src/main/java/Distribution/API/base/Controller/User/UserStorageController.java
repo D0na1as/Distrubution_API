@@ -37,13 +37,13 @@ public class UserStorageController {
     public ResponseEntity getPage(@PathVariable("page") int page,
                                   @RequestParam("count") int count) {
         List<Item> items = storageSrv.getPage(page, count);
-        check.checkItemEmpty(items);
+        //check.checkItemEmpty(items);
         return ResponseEntity.ok(items);
     }
 
 
     @GetMapping( "/item/{id}" )
-    public ResponseEntity getItem(@PathVariable long id) throws Exception {
+    public ResponseEntity getItem(@PathVariable long id) {
 
         Item item = storageSrv.getItem(id);
         check.checkIfNull(item);
@@ -68,7 +68,14 @@ public class UserStorageController {
         //TODO check if item exists
         Item checkItm = storageSrv.getItem(id);
         check.checkById(checkItm.getId());
-        return ResponseEntity.ok(storageSrv.updateItem(item));
+        check.checkPutCount(item.getQuantity());
+        Item newItem;
+        try {
+            newItem = storageSrv.updateItem(item);
+        } catch(DataIntegrityViolationException e) {
+            throw new ResponseStatusException(BAD_REQUEST,"Duplicate serial!");
+        }
+        return ResponseEntity.ok(newItem);
     }
 
     @DeleteMapping( value = "/item/{id}" )

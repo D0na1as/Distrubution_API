@@ -24,7 +24,7 @@ public class ClientStorageService {
     public ResponseEntity getPage(@PathVariable("page") int page,
                                   @RequestParam("count") int count)  {
         List<Item> items = storageSrv.getPage(page, count);
-        check.checkItemEmpty(items);
+        //check.checkItemEmpty(items);
 //        if (items.isEmpty()) {
 //            return ResponseEntity.notFound().build();
 //        }
@@ -40,6 +40,12 @@ public class ClientStorageService {
 //            return ResponseEntity.notFound().build();
 //        }
         return ResponseEntity.ok(item);
+    }
+
+    @GetMapping( value = "/item/count" )
+    public ResponseEntity getStorageSize()  {
+        long count = storageSrv.getCount();
+        return ResponseEntity.ok(count);
     }
 
 

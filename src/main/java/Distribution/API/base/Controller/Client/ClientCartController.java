@@ -23,16 +23,18 @@ public class ClientCartController {
     private StorageService storageSrv;
     @Autowired
     private CheckObject check;
-//    String client = "Client";
-//
+
     @PostMapping( value = "/item")
     public ResponseEntity addToCart(@RequestParam("itemId") long id,
                                     @RequestParam("quantity") int qnt)  {
 
         Item item = storageSrv.getItem(id);
         check.checkIfNull(item);
+        check.checkCount(item.getQuantity(), qnt);
         long cartId = cartSrv.getItemId(id);
-        check.checkById(cartId);
+        if (cartId!=0) {
+            check.checkCart(cartId);
+        }
         Cart cart = cartSrv.addItem(new Cart(id, qnt));
         return ResponseEntity.ok(cart);
     }
@@ -44,7 +46,11 @@ public class ClientCartController {
 
     @DeleteMapping( value = "/item/{id}" )
     public ResponseEntity removeItem(@PathVariable("id") long id)  {
-        check.checkById(cartSrv.removeItem(id));
+        long cartId = cartSrv.getItemId(id);
+        if (cartId==0) {
+            check.checkById(cartId);
+        }
+        check.checkById(cartSrv.removeItem(cartId));
         return ResponseEntity.ok().build();
     }
 
@@ -53,18 +59,30 @@ public class ClientCartController {
         cartSrv.clean();
         return ResponseEntity.ok().build();
     }
-//
-//    @PutMapping( value = "/item")
-//    public ResponseEntity updateCart(@RequestParam("itemId") long id,
-//                                     @RequestParam("qnt") int qnt)  {
-//        Item item = storageSrv.getItem(id);
-////        if (item==null) {
-////            return ResponseEntity.notFound().build();
-////        }
-//        item.setQuantity(qnt);
-//        storageSrv.addItem(item);
-//        return ResponseEntity.ok().build();
-//    }
+
+    @PutMapping( value = "/item")
+    public ResponseEntity updateCart(@RequestParam("itemId") long id,
+                                     @RequestParam("quantity") int qnt)  {
+        long cartId = cartSrv.getItemId(id);
+        if (cartId == 0) {
+            check.checkById(cartId);
+        }
+        if (qnt == 0) {
+            check.checkById(cartSrv.removeItem(cartId));
+            return ResponseEntity.ok().build();
+        } else {
+            Cart cart = cartSrv.getItemById(cartId);
+            Item item = storageSrv.getItem(id);
+            if (qnt < 0 || (cart.getCount() + item.getQuantity()) < qnt) {
+                check.checkIfNull(cart = null);
+            }
+            check.checkById(cartSrv.removeItem(cartId));
+            cart = cartSrv.addItem(new Cart(id, qnt));
+            check.checkIfNull(cart);
+
+            return ResponseEntity.ok().build();
+        }
+    }
 
 
 }

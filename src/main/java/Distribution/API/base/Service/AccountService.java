@@ -11,9 +11,14 @@ public class AccountService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public Account getAccountById(int id) {
-        return accountRepo.getAccountById(id);
+    public Account getAccountByEmail(String email) {
+        return accountRepo.getAccountByEmail(email);
     }
+
+    public Account setAccountByEmail(Account account) {
+        return accountRepo.save(account);
+    }
+
 //
 //    public Account getAccountByEmail(String email) {
 //        return accountRepo.getAcountByEmail(email);
