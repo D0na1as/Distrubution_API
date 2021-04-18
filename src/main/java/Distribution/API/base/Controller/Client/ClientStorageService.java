@@ -53,5 +53,14 @@ public class ClientStorageService {
         return ResponseEntity.ok(count);
     }
 
+    @GetMapping( value = "/page/{search}/{page}" )
+    public ResponseEntity getSearchPage(@PathVariable("search") String search,
+                                        @PathVariable("page") int page,
+                                        @RequestParam("count") int count)  {
+        List<Item> items = storageSrv.getPage(page, count, search);
+        check.checkItemEmpty(items);
+        return ResponseEntity.ok(items);
+    }
+
 
 }
