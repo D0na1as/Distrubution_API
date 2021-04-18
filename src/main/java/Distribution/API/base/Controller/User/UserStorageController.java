@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -42,31 +43,28 @@ public class UserStorageController {
     }
 
     @PostMapping( value = "/item")
-    public ResponseEntity addItem(@RequestBody Item item)  {
-        //TODO check for empty object, check same object
-        Item newItem;
-        try {
-            newItem = storageSrv.addItem(item);
-        } catch(DataIntegrityViolationException e) {
-            throw new ResponseStatusException(BAD_REQUEST,"Duplicate serial!");
+    public ResponseEntity addItem(@RequestBody Item item,
+                                  RedirectAttributes redirectAttributes)  {
+
+        Item itmBySerial = storageSrv.getBySerial(item.getSerial());
+        if (item.getSerial().equals(itmBySerial.getSerial())) {
+            item.setId(itmBySerial.getId());
+            return ResponseEntity.ok(storageSrv.updateItem(item));
         }
-        return ResponseEntity.ok(newItem);
+        return ResponseEntity.ok(storageSrv.addItem(item);
     }
 
     @PutMapping( value = "/item/{id}" )
     public ResponseEntity updateItem(@RequestBody Item item,
                                      @PathVariable long id)  {
-        //TODO check if item exists
-        Item checkItm = storageSrv.getByIdAndSerial(id, item.getSerial());
-        check.checkIfNull(checkItm);
+        Item itmById = storageSrv.getItem(id);
+        Item itmBySerial = storageSrv.getBySerial(item.getSerial());
+        check.checkIfNull(itmById);
         check.checkPutCount(item.getQuantity());
-        Item newItem;
-        try {
-            newItem = storageSrv.updateItem(item);
-        } catch(DataIntegrityViolationException e) {
+        if (itmById!=itmBySerial) {
             throw new ResponseStatusException(BAD_REQUEST,"Duplicate serial!");
         }
-        return ResponseEntity.ok(newItem);
+        return ResponseEntity.ok(storageSrv.updateItem(item));
     }
 
     @DeleteMapping( value = "/item/{id}" )

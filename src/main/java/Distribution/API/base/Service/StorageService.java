@@ -61,7 +61,7 @@ public class StorageService {
         return storageRepo.getOrderItems(orderId);
     }
 
-    public Item getByIdAndSerial(long id, String serial) {
-        Item item = storageRepo.getByIdAndSerial(id, serial);
+    public Item getBySerial(String serial) {
+        return storageRepo.getBySerial(serial);
     }
 }
