@@ -18,7 +18,7 @@ public interface DeliveryRepo extends CrudRepository<Delivery, Long> {
 
     //Queries
     String getDeliveryByStatus = "SELECT * FROM `"+ table +"` WHERE status=:#{#status.name()}";
-    String getByStatusAndClient = "SELECT * FROM `"+ table +"` WHERE `status`=':#{#status.name()}' AND `client`=':client'";
+    String getByStatusAndClient = "SELECT * FROM `"+ table +"` WHERE `status`=:#{#status.name()} AND `client`=:client";
     String updateStatus = "UPDATE `" + table + "` SET status=:#{#status.name()} WHERE id=?1";
     String getClient = "SELECT IFNULL((SELECT client FROM `"+ table +"` WHERE id=?1), 0);";
 
