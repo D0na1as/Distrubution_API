@@ -62,7 +62,7 @@ public class DeliveryService {
 //    }
 
     public List<Delivery> getByClientAndStatus(String client, OrderStatus status) {
-        System.out.println(deliveryRepo.getByClientAndStatus(client, status););
+        System.out.println(deliveryRepo.getByClientAndStatus(client, status));
         return deliveryRepo.getByClientAndStatus(client, status);
     }
 
