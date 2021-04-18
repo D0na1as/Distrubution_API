@@ -60,4 +60,8 @@ public class StorageService {
     public List<Item> getOrderItems (long orderId) {
         return storageRepo.getOrderItems(orderId);
     }
+
+    public Item getByIdAndSerial(long id, String serial) {
+        Item item = storageRepo.getByIdAndSerial(id, serial);
+    }
 }

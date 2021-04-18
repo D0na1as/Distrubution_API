@@ -12,10 +12,10 @@ import java.util.List;
 public interface StorageRepo extends CrudRepository<Item, Long> {
 
     String storage = "storage";
-    String deliveries = "deliveries";
     String orders = "orders";
 
     //Queries
+    String getItem = "SELECT * FROM "+ storage +" WHERE id=?1 AND `serial`=?2";
     String entitiesCount = "SELECT IFNULL((SELECT COUNT(*) FROM "+ storage +"), 0)";
     String searchCount = "SELECT IFNULL((SELECT COUNT(*) FROM `"+ storage +"` WHERE `id` LIKE %:value% OR `title` LIKE %:value% OR " +
                          "`serial` LIKE %:value% OR `quantity` LIKE %:value%),0)";
@@ -40,6 +40,9 @@ public interface StorageRepo extends CrudRepository<Item, Long> {
 
     @Query(nativeQuery = true, value = getOrderItems)
     List<Item> getOrderItems(long orderId);
+
+    @Query(nativeQuery = true, value = getItem)
+    Item getByIdAndSerial(long id, String serial);
 //
 //    @Query(nativeQuery = true, value = getOrderListByUser)
 //    List<Long> getOrders(int userId);

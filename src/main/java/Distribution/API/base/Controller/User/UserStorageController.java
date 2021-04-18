@@ -57,8 +57,8 @@ public class UserStorageController {
     public ResponseEntity updateItem(@RequestBody Item item,
                                      @PathVariable long id)  {
         //TODO check if item exists
-        Item checkItm = storageSrv.getItem(id);
-        check.checkById(checkItm.getId());
+        Item checkItm = storageSrv.getByIdAndSerial(id, item.getSerial());
+        check.checkIfNull(checkItm);
         check.checkPutCount(item.getQuantity());
         Item newItem;
         try {
