@@ -15,7 +15,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 @RequestMapping("/v1/user/storage")
 public class UserStorageController {
 
