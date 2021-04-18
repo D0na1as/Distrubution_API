@@ -1,7 +1,7 @@
 package Distribution.API.base.Controller.Client;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
-import Distribution.API.base.Controller.Exceptions.CheckObject;
+import Distribution.API.base.Config.OrderStatus;
+import Distribution.API.base.Exceptions.CheckObject;
 import Distribution.API.base.Model.Cart;
 import Distribution.API.base.Model.Delivery;
 import Distribution.API.base.Model.Item;
@@ -37,8 +37,9 @@ public class ClientDeliveryController {
     }
 
     @GetMapping( value = "/status/{status}" )
-    public ResponseEntity getOrdersByStatus(@PathVariable("status") OrderStatus status)  {
-        List<Delivery> deliveries = deliverySrv.getByClientAndStatus( "client", status);
+    public ResponseEntity getOrdersByStatus(@PathVariable("status") OrderStatus status,
+                                            @RequestParam("client") String client)  {
+        List<Delivery> deliveries = deliverySrv.getByClientAndStatus(client, status);
         //check.checkDelivEmpty(deliveries);
         return ResponseEntity.ok(deliveries);
     }

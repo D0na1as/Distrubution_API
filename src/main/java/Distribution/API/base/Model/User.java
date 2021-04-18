@@ -1,6 +1,6 @@
 //package Distribution.API.base.Model;
 //
-//import Distribution.API.base.Controller.Config.Roles;
+//import Distribution.API.base.Config.Roles;
 //
 //import javax.persistence.Entity;
 //import javax.persistence.EnumType;

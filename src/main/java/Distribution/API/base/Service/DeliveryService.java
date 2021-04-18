@@ -1,17 +1,15 @@
 package Distribution.API.base.Service;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
+import Distribution.API.base.Config.OrderStatus;
 import Distribution.API.base.Model.Cart;
 import Distribution.API.base.Model.Delivery;
 import Distribution.API.base.Model.Item;
 import Distribution.API.base.Model.Order;
-import Distribution.API.base.Repository.CartRepo;
 import Distribution.API.base.Repository.DeliveryRepo;
 import Distribution.API.base.Repository.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

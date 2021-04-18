@@ -1,6 +1,6 @@
 package Distribution.API.base.Repository;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
+import Distribution.API.base.Config.OrderStatus;
 import Distribution.API.base.Model.Order;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

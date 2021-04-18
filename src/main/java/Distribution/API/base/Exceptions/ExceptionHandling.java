@@ -1,4 +1,4 @@
-package Distribution.API.base.Controller.Exceptions;
+package Distribution.API.base.Exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

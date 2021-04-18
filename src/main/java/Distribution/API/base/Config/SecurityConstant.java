@@ -1,4 +1,4 @@
-package Distribution.API.base.Controller.Config;
+package Distribution.API.base.Config;
 
 public class SecurityConstant {
     public static final long EXPIRATION_TIME = 432_000_000; //5 DAYS

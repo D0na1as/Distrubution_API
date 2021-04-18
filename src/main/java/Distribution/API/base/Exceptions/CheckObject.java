@@ -1,11 +1,9 @@
-package Distribution.API.base.Controller.Exceptions;
+package Distribution.API.base.Exceptions;
 
 import Distribution.API.base.Model.Account;
 import Distribution.API.base.Model.Cart;
 import Distribution.API.base.Model.Delivery;
 import Distribution.API.base.Model.Item;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 

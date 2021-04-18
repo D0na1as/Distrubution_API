@@ -1,6 +1,6 @@
 package Distribution.API.base.Repository;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
+import Distribution.API.base.Config.OrderStatus;
 import Distribution.API.base.Model.Delivery;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.Order;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface DeliveryRepo extends CrudRepository<Delivery, Long> {
 
     //Queries
     String getDeliveryByStatus = "SELECT * FROM `"+ table +"` WHERE status=:#{#status.name()}";
-    String getByStatusAndClient = "SELECT * FROM `"+ table +"` WHERE status=:#{#status.name()} AND client=:client";
+    String getByStatusAndClient = "SELECT * FROM `"+ table +"` WHERE `status`=':#{#status.name()}' AND `client`=':client'";
     String updateStatus = "UPDATE `" + table + "` SET status=:#{#status.name()} WHERE id=?1";
     String getClient = "SELECT IFNULL((SELECT client FROM `"+ table +"` WHERE id=?1), 0);";
 

@@ -1,6 +1,6 @@
-//package Distribution.API.base.Controller.Filter;
+//package Distribution.API.base.Filter;
 //
-//import Distribution.API.base.Controller.Config.SecurityConstant;
+//import Distribution.API.base.Config.SecurityConstant;
 //import Distribution.API.base.Controller.Utility.JWTTokenProvider;
 //import jdk.nashorn.internal.parser.Token;
 //import org.springframework.http.HttpHeaders;

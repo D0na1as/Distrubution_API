@@ -1,4 +1,4 @@
-//package Distribution.API.base.Controller.Filter;
+//package Distribution.API.base.Filter;
 //
 //import org.springframework.security.core.AuthenticationException;
 //import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;

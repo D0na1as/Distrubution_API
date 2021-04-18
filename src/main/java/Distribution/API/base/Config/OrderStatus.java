@@ -1,6 +1,4 @@
-package Distribution.API.base.Controller.Config;
-
-import org.springframework.stereotype.Component;
+package Distribution.API.base.Config;
 
 public enum OrderStatus {
     pending,

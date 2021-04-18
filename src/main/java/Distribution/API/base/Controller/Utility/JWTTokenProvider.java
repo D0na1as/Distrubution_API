@@ -1,6 +1,6 @@
 //package Distribution.API.base.Controller.Utility;
 //
-//import Distribution.API.base.Controller.Config.SecurityConstant;
+//import Distribution.API.base.Config.SecurityConstant;
 //import Distribution.API.base.Model.UserPrincipal;
 //import com.auth0.jwt.JWT;
 //import com.auth0.jwt.JWTVerifier;

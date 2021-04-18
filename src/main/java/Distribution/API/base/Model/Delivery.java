@@ -1,6 +1,6 @@
 package Distribution.API.base.Model;
 
-import Distribution.API.base.Controller.Config.OrderStatus;
+import Distribution.API.base.Config.OrderStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
