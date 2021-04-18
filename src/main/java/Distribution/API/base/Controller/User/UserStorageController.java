@@ -61,8 +61,9 @@ public class UserStorageController {
         Item itmBySerial = storageSrv.getBySerial(item.getSerial());
         check.checkIfNull(itmById);
         check.checkPutCount(item.getQuantity());
-        if (itmById!=itmBySerial) {
-            throw new ResponseStatusException(BAD_REQUEST,"Duplicate serial!");
+        if (itmById!=itmBySerial && itmBySerial!=null) {
+            //throw new ResponseStatusException(BAD_REQUEST,"Duplicate serial!");
+            item.setId(itmBySerial.getId());
         }
         return ResponseEntity.ok(storageSrv.updateItem(item));
     }
