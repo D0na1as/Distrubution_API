@@ -39,6 +39,7 @@ public class ClientDeliveryController {
     @GetMapping( value = "/status/{status}" )
     public ResponseEntity getOrdersByStatus(@PathVariable("status") OrderStatus status,
                                             @RequestParam("client") String client)  {
+        System.out.println("Statis "+ status +", client " + client);
         List<Delivery> deliveries = deliverySrv.getByClientAndStatus(client, status);
         //check.checkDelivEmpty(deliveries);
         return ResponseEntity.ok(deliveries);
