@@ -51,7 +51,7 @@ public class UserStorageController {
             item.setId(itmBySerial.getId());
             return ResponseEntity.ok(storageSrv.updateItem(item));
         }
-        return ResponseEntity.ok(storageSrv.addItem(item);
+        return ResponseEntity.ok(storageSrv.addItem(item));
     }
 
     @PutMapping( value = "/item/{id}" )
