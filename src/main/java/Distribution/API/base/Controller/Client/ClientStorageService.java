@@ -47,5 +47,11 @@ public class ClientStorageService {
         return ResponseEntity.ok(count);
     }
 
+    @GetMapping( value = "/item/count/{search}" )
+    public ResponseEntity getStorageSearch(@PathVariable("search") String search){
+        long count = storageSrv.getCount(search);
+        return ResponseEntity.ok(count);
+    }
+
 
 }
